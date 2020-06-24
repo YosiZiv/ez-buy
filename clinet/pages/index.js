@@ -20,18 +20,13 @@ export default function Home()
   return (
     <Container maxWidth="sm">
       <Head>
-        <title>איזיביי - מרכז העסקים </title>
+        <title></title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Typography variant="h4" component="h1" gutterBottom>
         EZbuy - OpenData Hackathon
         </Typography>
-      <form className={classes.root} noValidate autoComplete="off">
-        <TextField id="standard-basic" label="Standard" />
-        <TextField id="filled-basic" label="Filled" variant="filled" />
-        <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-      </form>
     </Container>
   );
 }
