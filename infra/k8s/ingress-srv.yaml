@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: ez-buy.co.il
+    - host: ez-buy.dev
       http:
         paths:
           - path: /api/users/?(.*)
