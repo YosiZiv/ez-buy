@@ -20,7 +20,7 @@ export default function Home()
   return (
     <Container maxWidth="sm">
       <Head>
-        <title></title>
+        <title>ezbuy</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
