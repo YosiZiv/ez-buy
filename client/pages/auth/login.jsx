@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Router from 'next/router';
 
 
 import axios from 'axios';
@@ -16,6 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import { useForm } from "react-hook-form";
+import useRequest from "../../hooks/useRequest";
 
 
 const useStyles = makeStyles( ( theme ) => ( {
@@ -40,12 +42,21 @@ const useStyles = makeStyles( ( theme ) => ( {
 export default function Login()
 {
     const { handleSubmit, register, errors } = useForm();
+    const { doRequest, requestErrors } = useRequest( {
+        url: "/api/users/signup",
+        method: "post",
+        onSuccess: ( response ) =>
+        {
+            console.log( response );
+            Router.push( '/' );
+        },
+    } );
     const classes = useStyles();
 
     const onSubmit = values =>
     {
         console.log( values );
-
+        doRequest( values );
     };
     return (
         <Container component="main" maxWidth="xs">
