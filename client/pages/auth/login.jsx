@@ -1,5 +1,8 @@
 import Head from 'next/head';
 
+
+import axios from 'axios';
+
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -11,6 +14,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+import { useForm } from "react-hook-form";
 
 
 const useStyles = makeStyles( ( theme ) => ( {
@@ -34,7 +39,14 @@ const useStyles = makeStyles( ( theme ) => ( {
 } ) );
 export default function Login()
 {
+    const { handleSubmit, register, errors } = useForm();
     const classes = useStyles();
+
+    const onSubmit = values =>
+    {
+        console.log( values );
+
+    };
     return (
         <Container component="main" maxWidth="xs">
             <Head>
@@ -45,7 +57,7 @@ export default function Login()
                 <Typography component="h1" variant="h5">
                     התחבר
         </Typography>
-                <form className={classes.form} noValidate>
+                <form onSubmit={handleSubmit( onSubmit )} className={classes.form} noValidate>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -56,7 +68,21 @@ export default function Login()
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        inputRef={register( {
+                            required: 'דואר אולקטורני הוא שדה חובה',
+                            minLength: {
+                                value: 2,
+                                message: 'דואר אלקטרוני חייב להכיל לפחות 2 תווים',
+                            },
+                            pattern: {
+                                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                message: 'כתובת דואר אלקטורני לא תקינה'
+                            }
+                        } )}
                     />
+                    <span className="errorMessage">
+                        {errors.email && errors.email.message}
+                    </span>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -67,8 +93,18 @@ export default function Login()
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        inputRef={register( {
+                            required: 'שם פרטי שדה חובה',
+                            minLength: {
+                                value: 6,
+                                message: 'סיסמא חייבת להכיל לפחות 6 תווים'
+                            }
+                        } )}
                     />
-
+                    <span className="errorMessage">
+                        {errors.password && errors.password.message}
+                    </span>
+                    <br />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
                         label="תיזכור אותי"
@@ -80,7 +116,7 @@ export default function Login()
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign In
+                        התחבר
           </Button>
                     <Grid container>
                         <Grid item xs>
