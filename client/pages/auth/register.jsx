@@ -2,8 +2,6 @@
 import { useState } from "react";
 
 import Head from "next/head";
-
-import axios from "axios";
 import { useForm } from "react-hook-form";
 
 import Button from "@material-ui/core/Button";
@@ -233,6 +231,7 @@ export default function Register() {
             </Grid>
           </Grid>
         </form>
+        {requestErrors}
       </div>
     </Container>
   );
