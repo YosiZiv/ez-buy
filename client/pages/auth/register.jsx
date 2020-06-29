@@ -2,10 +2,7 @@
 import { useState } from "react";
 import Router from 'next/router';
 import Head from "next/head";
-<<<<<<< HEAD
-=======
 import axios from "axios";
->>>>>>> 8b42c6b4a60d1f92ca13a93cd43c02e020d2dadd
 import { useForm } from "react-hook-form";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
