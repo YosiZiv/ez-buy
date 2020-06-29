@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState } from "react";
+import axios from "axios";
 
 export default ({ url, method, onSuccess }) => {
   const [errors, setErrors] = useState(null);
@@ -24,5 +24,5 @@ export default ({ url, method, onSuccess }) => {
       );
     }
   };
-  return { doRequest, errors };
+  return { doRequest, requestErrors };
 };
