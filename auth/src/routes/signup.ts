@@ -19,32 +19,51 @@ router.post(
   async (req: Request, res: Response) => {
     console.log("function work");
 
-    const { email, password } = req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      address,
+      password,
+      imgUrl,
+    } = req.body;
+    try {
+      const existingUser = await User.findOne({ email });
 
-    const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        throw new BadRequestError("Email in use");
+      }
 
-    if (existingUser) {
-      throw new BadRequestError("Email in use");
+      const user = User.build({
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        password,
+        imgUrl,
+      });
+      await user.save();
+
+      // Generate JWT
+      const userJwt = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+        },
+        process.env.JWT_KEY!
+      );
+
+      // Store it on session object
+      req.session = {
+        jwt: userJwt,
+      };
+
+      res.status(201).send(user);
+    } catch (err) {
+      throw new BadRequestError("something went wrong :/");
     }
-
-    const user = User.build({ email, password });
-    await user.save();
-
-    // Generate JWT
-    const userJwt = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-      },
-      process.env.JWT_KEY!
-    );
-
-    // Store it on session object
-    req.session = {
-      jwt: userJwt,
-    };
-
-    res.status(201).send(user);
   }
 );
 
