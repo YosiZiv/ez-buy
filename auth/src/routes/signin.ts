@@ -22,6 +22,8 @@ router.post(
     const { email, password } = req.body;
     try {
       const existingUser = await User.findOne({ email });
+      console.log(existingUser);
+
       if (!existingUser) {
         throw new BadRequestError("Invalid credentials");
       }
@@ -37,8 +39,8 @@ router.post(
       // Generate JWT
       const userJwt = jwt.sign(
         {
-          id: existingUser.id,
-          email: existingUser.email,
+          ...existingUser,
+          password: "",
         },
         process.env.JWT_KEY!
       );
@@ -50,6 +52,8 @@ router.post(
 
       res.status(200).send(existingUser);
     } catch (err) {
+      console.log(err);
+
       throw new BadRequestError("something went wrong :/");
     }
   }
