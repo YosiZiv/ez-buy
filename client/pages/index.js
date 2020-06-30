@@ -9,8 +9,10 @@ import Grid from '@material-ui/core/Grid';
 const useStyles = makeStyles( ( theme ) => ( {
   root: {
     '& > *': {
-
+      display: 'flex',
+      textAlign: 'center',
     },
+
   },
 } ) );
 
@@ -18,7 +20,7 @@ export default function Home()
 {
   const classes = useStyles();
   return (
-    <Container maxWidth="sm">
+    <Container className={classes.root} maxWidth="sm">
       <Head>
         <title>ezbuy</title>
         <link rel="icon" href="/favicon.ico" />
@@ -27,11 +29,15 @@ export default function Home()
         <Grid item sm={12} md={8}>
           <br />
           <Typography variant="h4" component="h1" gutterBottom>
-            EZbuy - OpenData Hackathon
+            פתרון חברתי לשינוע משלוחים
         </Typography>
         </Grid>
         <Grid item sm={12} md={4}>
-          <img src="box.gif" alt="box gif" />
+          <img style={{
+            maxWidth: '100%',
+            display: 'block',
+            margin: '4vw auto',
+          }} src="box.gif" alt="box gif" />
         </Grid>
       </Grid>
 
