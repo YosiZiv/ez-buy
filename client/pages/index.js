@@ -3,7 +3,6 @@ import Head from 'next/head';
 
 import Typing from '../components/Typing';
 
-
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import { setCurrentUserAction } from '../src/slices/authSlice';
 import buildClient from '../api/build-client';
 import { useDispatch } from 'react-redux';
+
 const useStyles = makeStyles( ( theme ) => ( {
   root: {
     '& > *': {
