@@ -40,7 +40,6 @@ export default function MyApp( props )
                 <title>My page</title>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
                 <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
-
             </Head>
             <Provider store={store}>
                 <StylesProvider jss={jss}>
