@@ -43,7 +43,7 @@ export default function Login()
 {
     const { handleSubmit, register, errors } = useForm();
     const { doRequest, requestErrors } = useRequest( {
-        url: "/api/users/signup",
+        url: "/api/users/signin",
         method: "post",
         onSuccess: ( response ) =>
         {

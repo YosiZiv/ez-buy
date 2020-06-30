@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { useSelector } from 'react-redux';
+
+
 const useStyles = makeStyles( ( theme ) => ( {
     root: {
         flexGrow: 1,
@@ -22,6 +25,8 @@ const useStyles = makeStyles( ( theme ) => ( {
 export default function NavBar()
 {
     const classes = useStyles();
+    const currentUser = useSelector( ( state ) => state.auth.currentUser );
+
 
     return (
         <div className={classes.root}>
@@ -31,8 +36,17 @@ export default function NavBar()
                     <Typography variant="h6" className={classes.title}>
                         EZBuy - בית לעסקים בבאר שבע
           </Typography>
-                    <Button color="inherit">התחבר</Button>
-                    <Button color="inherit">הירשם</Button>
+                    {Object.keys( currentUser ).length === 0 &&
+                        <>
+                            <Button color="inherit">התחבר</Button>
+                            <Button color="inherit">הירשם</Button>
+                        </>
+                    }
+                    {Object.keys( currentUser ).length !== 0 &&
+                        <>
+                            <pre>{JSON.stringify( currentUser )}</pre>
+                        </>
+                    }
 
                 </Toolbar>
             </AppBar>
