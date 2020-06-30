@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locker-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: locker
+  template:
+    metadata:
+      labels:
+        app: locker
+    spec:
+      containers:
+        - name: locker
+          image: katlany/ez-buy-locker
+          env:
+            - name: MONGO_URI
+              value: "mongodb://locker-mongo-srv:27017/locker"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: locker-srv
+spec:
+  selector:
+    app: locker
+  ports:
+    - name: locker
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

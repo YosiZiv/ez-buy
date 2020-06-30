@@ -3,10 +3,7 @@ import "express-async-errors";
 import { json } from "body-parser";
 import cookieSession from "cookie-session";
 
-import { currentUserRouter } from "./routes/current-user";
-import { signinRouter } from "./routes/signin";
-import { signoutRouter } from "./routes/signout";
-import { signupRouter } from "./routes/signup";
+import { createLockerRouter } from "./routes/create-locker";
 import { errorHandler, NotFoundError } from "@yztickets/common";
 
 const app = express();
@@ -19,10 +16,7 @@ app.use(
   })
 );
 
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
+app.use(createLockerRouter);
 
 app.all("*", async (req, res) => {
   throw new NotFoundError();

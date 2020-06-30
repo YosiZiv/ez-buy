@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locker-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: locker-mongo
+  template:
+    metadata:
+      labels:
+        app: locker-mongo
+    spec:
+      containers:
+        - name: locker-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: locker-mongo-srv
+spec:
+  selector:
+    app: locker-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

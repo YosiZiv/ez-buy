@@ -1,9 +1,16 @@
 import mongoose from "mongoose";
 // An interface that describes the properties
 // that are requried to create a new locker
+const createLockers = () => {
+  const lockerArray = [];
+  for (let i = 0; i < 5; i++) {
+    lockerArray.push({ id: mongoose.Types.ObjectId(), available: true });
+  }
+  return lockerArray;
+};
 interface LockerAttrs {
   name: string;
-  password: string;
+  location: Location;
 }
 interface Location {
   lat: string;
@@ -19,19 +26,27 @@ interface LockerModel extends mongoose.Model<LockerDoc> {
 // that a Locker Document has
 interface LockerDoc extends mongoose.Document {
   name: string;
-  shelves: [object];
   location: Location;
 }
 
 const LockerSchema = new mongoose.Schema(
   {
-    email: {
+    name: {
       type: String,
       required: true,
     },
-    password: {
-      type: String,
+    shelves: {
+      type: [Object],
       required: true,
+    },
+    location: {
+      type: [Object],
+      required: true,
+    },
+    availableSpots: {
+      type: Number,
+      required: true,
+      default: 5,
     },
   },
   {
@@ -39,25 +54,20 @@ const LockerSchema = new mongoose.Schema(
       transform(doc, ret) {
         ret.id = ret._id;
         delete ret._id;
-        delete ret.password;
         delete ret.__v;
       },
     },
   }
 );
-
-userSchema.pre("save", async function (done) {
-  if (this.isModified("password")) {
-    const hashed = await Password.toHash(this.get("password"));
-    this.set("password", hashed);
-  }
+LockerSchema.pre("save", function (done) {
+  this.set("shelves", createLockers());
   done();
 });
 
-userSchema.statics.build = (attrs: UserAttrs) => {
-  return new User(attrs);
+LockerSchema.statics.build = (attrs: LockerAttrs) => {
+  return new Locker(attrs);
 };
 
-const User = mongoose.model<UserDoc, UserModel>("User", userSchema);
+const Locker = mongoose.model<LockerDoc, LockerModel>("Locker", LockerSchema);
 
-export { User };
+export { Locker };
